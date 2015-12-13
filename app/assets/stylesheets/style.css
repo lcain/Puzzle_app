@@ -1,0 +1,23 @@
+.map {
+  position: absolute;
+  margin: auto;
+  left: 0; 
+  right: 0;
+  top: 0;
+  bottom: 0; 
+  border: 2px solid black;
+}
+
+.draggable {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#container {
+  height: 100vh;
+}
+
+body {
+  overflow: hidden;
+}
