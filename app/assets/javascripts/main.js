@@ -64,44 +64,54 @@ interact('.draggable')
   window.dragMoveListener = dragMoveListener;
 
 
+var bHeight = $('body').height();
+var bWidth = $('body').width();
 
-
-console.log($(".draggable").length);
+// console.log($(".draggable").length);
 
 draggable = $(".draggable");
 var map = $('.map');
 var mapHeight = map.height();
 var mapWidth = map.width();
 
-function getRand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomZone(min, max) {
+  var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log('hecticZone', min, max, pos);
+  return pos;
+}
+
+
+function getRandomPosition(min, max) {
+  var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log('hecticPos', min, max, pos);
+  return pos;
 }
 
 for (var i = 0; i < draggable.length; i++) {
   var d1 = $(draggable[i])
-  var dwidth = getRand(0, (maxWidth - d1.width()));
-  var dheight = getRand(0, (maxHeight - d1.height()));
+  var dwidth = getRandomZone(0, (bWidth - d1.width()));
+  var dheight = getRandomZone(0, (bHeight - d1.height()));
 
 // ASK JACK AND JOEL ABOUT THIS LATER, PICS OFF SCREEN.
 
 
-  var topMap = (maxHeight / 2) - (mapHeight / 2);
-  var botMap = (maxHeight / 2) + (mapHeight / 2);
-  var leftMap = (maxWidth / 2) - (mapWidth / 2);
-  var rightMap = (maxWidth / 2) + (maxWidth / 2);
+  var topMap = (bHeight / 2) - (mapHeight / 2);
+  var botMap = (bHeight / 2) + (mapHeight / 2);
+  var leftMap = (bWidth / 2) - (mapWidth / 2);
+  var rightMap = (bWidth / 2) + (bWidth / 2);
 
-  var zone = getRand(0, 3);
+  var zone = getRandomZone(0, 3);
 
   if (zone === 0) {
-    dheight = getRand(0, topMap);
+    dheight = getRandomPosition(0, topMap);
   } else if (zone === 1) {
-    dwidth = getRand(0, leftMap);
+    dwidth = getRandomPosition(0, leftMap);
   } else if (zone === 2) {
-    dwidth = getRand(rightMap, maxWidth);
+    dwidth = getRandomPosition(rightMap, bWidth);
   } else {
-    dheight = getRand(botMap, maxHeight);
+    dheight = getRandomPosition(botMap, bHeight);
   };
-  console.log('sone', zone)
+  console.log('zone', zone)
 
   d1.css({top: dheight, left: dwidth})
 };
@@ -110,14 +120,14 @@ for (var i = 0; i < draggable.length; i++) {
 
 
 
- var testRand = function(iterations) {
-  var res = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0};
-  for (var i = 0; i < iterations; i++){
-    res[getRand(0,3)] += 1;
-  }
-  console.log(res)
- }
- testRand(10000);
+ // var testRand = function(iterations) {
+ //  var res = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0};
+ //  for (var i = 0; i < iterations; i++){
+ //    res[getRandomZone(0,3)] += 1;
+ //  }
+ //  console.log(res)
+ // }
+ // testRand(10000);
 
 
 
