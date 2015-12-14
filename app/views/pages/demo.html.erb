@@ -1,14 +1,3 @@
-<h1>lalnaklna</h1>
-
-<%= image_tag @map[:image] %>
-<%= asset_path @map[:image] %>
-
-<h1>klnaslkfnskln</h1>
-
-
-
-
-
 <div id="container">
   <img src="<%= asset_path @map[:image] %>" class="map">
   <%#= asset_path @map[:image], :class => "map" %>
@@ -17,7 +6,8 @@
 
 
 <% @pieces.each do |piece| %>
-  <img src="<%= asset_path piece[:image] %>" class="draggable">
+
+  <img src="<%= asset_path( piece[:image] ) %>" class="draggable">
 
   <%#= asset_path piece[:image], :class => "draggable" %>
   <!-- <img src="<%#= piece[:image] %>" class="draggable"> -->
