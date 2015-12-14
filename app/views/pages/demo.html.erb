@@ -1,0 +1,15 @@
+
+
+
+<div id="container">
+  <%= image_tag @map[:image], :class => "map" %>
+<!-- <img src="<%#= @map[:image] %>" class="map"> -->
+
+
+
+<% @pieces.each do |piece| %>
+  <%= image_tag piece[:image], :class => "draggable" %>
+  <!-- <img src="<%#= piece[:image] %>" class="draggable"> -->
+<% end %>
+</div>
+

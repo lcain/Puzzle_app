@@ -1,13 +1,13 @@
 Map.destroy_all
 
-m1 = Map.create :name => 'Dinobaby', :image => "/assets/dinoFull.png"
+m1 = Map.create :name => 'Dinobaby', :image => "dinoFull.png"
 
 Piece.destroy_all
 
-p1 = Piece.create :image => "/assets/topRight.png", :x_cor => 189, :y_cor => 84
-p2 = Piece.create :image => "/assets/topLeft.png", :x_cor => 92, :y_cor => 87
-p3 = Piece.create :image => "/assets/bottomRight.png", :x_cor => 208, :y_cor => 227
-p4 = Piece.create :image => "/assets/bottomLeft.png", :x_cor => 2, :y_cor => 207
+p1 = Piece.create :image => "topRight.png", :x_cor => 189, :y_cor => 84
+p2 = Piece.create :image => "topLeft.png", :x_cor => 92, :y_cor => 87
+p3 = Piece.create :image => "bottomRight.png", :x_cor => 208, :y_cor => 227
+p4 = Piece.create :image => "bottomLeft.png", :x_cor => 2, :y_cor => 207
 
 
 m1.pieces << p1 << p2 << p3 << p4
