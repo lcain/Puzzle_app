@@ -1,7 +1,13 @@
-.map {
-  position: absolute;
+.map { 
   border: 2px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+   /*bring your own prefixes */
+  transform: translate(-30%, -50%);
 }
+
+
 
 .draggable {
   position: absolute;
@@ -18,3 +24,22 @@ body {
   margin: auto;
 }
 
+#mapDiv {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0; 
+  right: 0;
+  bottom: 0; 
+  border: 2px solid red;
+}
+
+#piecesDiv {
+  border: 2px solid green;
+  display: inline-block;
+  position: absolute;
+  top: 20%;
+  height: 25em;
+  width: 15em;
+ 
+}

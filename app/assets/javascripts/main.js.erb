@@ -1,0 +1,217 @@
+var draggable;
+
+
+$(window).load(function() {
+
+  var maxHeight = 0;
+  var maxWidth = 0;
+
+  var doc = $(document);
+  maxHeight = doc.height();
+  maxWidth = doc.width();
+  setInterval(function() {
+    var doc = $(document);
+    maxHeight = doc.height();
+    maxWidth = doc.width();
+  }, 1000);
+
+  $('body').css({"background-color": "rgb(119, 119, 119)"})
+ 
+
+// target elements with the "draggable" class
+interact('.draggable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    restrict: {
+      restriction: "parent",
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+    // enable autoScroll
+    autoScroll: true,
+
+    // call this function on every dragmove event
+    onmove: dragMoveListener,
+    // call this function on every dragend event
+    onend: function (event) {
+      var textEl = event.target.querySelector('p');
+
+      textEl && (textEl.textContent =
+        'moved a distance of '
+        + (Math.sqrt(event.dx * event.dx +
+                     event.dy * event.dy)|0) + 'px');
+    }
+  });
+
+  function dragMoveListener (event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  }
+
+  // this is used later in the resizing and gesture demos
+  window.dragMoveListener = dragMoveListener;
+
+
+var bHeight = $('body').height();
+var bWidth = $('body').width();
+
+// console.log($(".draggable").length);
+var piecesDiv = $('#piecesDiv');
+
+draggable = $(".draggable");
+var map = $('.map');
+var mapHeight = map.height();
+var mapWidth = map.width();
+
+// function getRandomZone(min, max) {
+//   var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+//   console.log('hecticZone', pos);
+//   return pos;
+// }
+
+
+function getRandomPosition(min, max) {
+  var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log('hecticPos', min, max, pos);
+  return pos;
+}
+
+for (var i = 0; i < draggable.length; i++) {
+  var d1 = $(draggable[i])
+  console.log('xxx', d1.width(), d1.height());
+
+  var divTop = parseInt(piecesDiv.css('top'));
+  var divWidth = parseInt(piecesDiv.css('width'));
+  console.log('ASDF', divTop, divWidth)
+
+  var dwidth = getRandomPosition(0, (piecesDiv.width() - d1.width()));
+  var dheight = getRandomPosition( divTop, piecesDiv.height() );
+
+  d1.css({top: dheight, left: dwidth})
+};
+
+
+
+
+
+
+
+ // var testRand = function(iterations) {
+ //  var res = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0};
+ //  for (var i = 0; i < iterations; i++){
+ //    res[getRandomZone(0,3)] += 1;
+ //  }
+ //  console.log(res)
+ // }
+ // testRand(10000);
+
+
+
+
+  //************************DROP ZONE***************
+
+
+
+  /* The dragging code for '.draggable' from the demo above
+   * applies to this demo as well so it doesn't have to be repeated. */
+
+  // enable draggables to be dropped into this
+  interact('.dropzone').dropzone({
+    // only accept elements matching this CSS selector
+    accept: '.yes-drop',
+    // Require a 75% element overlap for a drop to be possible
+    overlap: 0.75,
+
+    // listen for drop related events:
+
+    ondropactivate: function (event) {
+      // add active dropzone feedback
+      event.target.classList.add('drop-active');
+    },
+    ondragenter: function (event) {
+      var draggableElement = event.relatedTarget,
+          dropzoneElement = event.target;
+
+      // feedback the possibility of a drop
+      dropzoneElement.classList.add('drop-target');
+      draggableElement.classList.add('can-drop');
+      draggableElement.textContent = 'Dragged in';
+    },
+    ondragleave: function (event) {
+      // remove the drop feedback style
+      event.target.classList.remove('drop-target');
+      event.relatedTarget.classList.remove('can-drop');
+      event.relatedTarget.textContent = 'Dragged out';
+    },
+    ondrop: function (event) {
+      event.relatedTarget.textContent = 'Dropped';
+      console.log('Target position:', $(event.relatedTarget).position());
+      var relPos = {top: 0, left: 0};
+
+      relPos.top = $(event.relatedTarget).position().top - $('.map').position().top;
+      console.log('Top', relPos.top )
+
+      relPos.left = $(event.relatedTarget).position().left - $('.map').position().left;
+      console.log('Left', relPos.left )
+
+
+      var databaseData = JSON.parse($(event.relatedTarget).attr('data'));
+      var x_cor = databaseData[0];
+      var y_cor = databaseData[1];
+
+
+      if ( ( ( relPos.top >= y_cor * 0.9 ) && 
+              ( relPos.top <= y_cor * 1.1 ) ) && 
+              ( ( relPos.left >= x_cor * 0.9 ) && 
+              ( relPos.left <= x_cor * 1.1 ) ) ) {
+        console.log("WHAT? THIS WORKS!")
+        // $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+        // $(event.relatedTarget).removeClass('draggable yes-drop can-drop yes-drop')
+        $(event.relatedTarget).css({top: y_cor, left: x_cor});
+
+      }
+
+    },
+    ondropdeactivate: function (event) {
+      // remove active dropzone feedback
+      event.target.classList.remove('drop-active');
+      event.target.classList.remove('drop-target');
+    }
+  });
+
+
+ondrop: function (event) {
+        var draggableElement = event.relatedTarget,
+            dropzoneElement = event.target;
+
+        draggableElement.textContent = 'Dropped';
+        $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
