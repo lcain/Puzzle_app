@@ -59,48 +59,59 @@ interact('.draggable')
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+
+
   }
 
   // this is used later in the resizing and gesture demos
   window.dragMoveListener = dragMoveListener;
 
 
-var bHeight = $('body').height();
-var bWidth = $('body').width();
+  var bHeight = $('body').height();
+  var bWidth = $('body').width();
 
-// console.log($(".draggable").length);
-var piecesDiv = $('#piecesDiv');
+  // console.log($(".draggable").length);
+  var piecesDiv = $('#piecesDiv');
 
-draggable = $(".draggable");
-var map = $('.map');
-var mapHeight = map.height();
-var mapWidth = map.width();
+  draggable = $(".draggable");
+  var map = $('.map');
+  var mapHeight = map.height();
+  var mapWidth = map.width();
 
-// function getRandomZone(min, max) {
-//   var pos = Math.floor(Math.random() * (max - min + 1)) + min;
-//   console.log('hecticZone', pos);
-//   return pos;
-// }
+  // function getRandomZone(min, max) {
+  //   var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+  //   console.log('hecticZone', pos);
+  //   return pos;
+  // }
 
 
-function getRandomPosition(min, max) {
-  var pos = Math.floor(Math.random() * (max - min + 1)) + min;
-  console.log('hecticPos', min, max, pos);
-  return pos;
-}
+  function getRandomPosition(min, max) {
+    var pos = Math.floor(Math.random() * (max - min + 1)) + min;
+    // console.log('hecticPos', min, max, pos);
+    return pos;
+  }
 
-for (var i = 0; i < draggable.length; i++) {
-  var d1 = $(draggable[i])
-  console.log('xxx', d1.width(), d1.height());
+  for (var i = 0; i < draggable.length; i++) {
+    var d1 = $(draggable[i])
+    // console.log('xxx', d1.width(), d1.height());
 
-  var divTop = parseInt(piecesDiv.css('top'));
-  var divWidth = parseInt(piecesDiv.css('width'));
-  console.log('ASDF', divTop, divWidth)
+    var divTop = parseInt(piecesDiv.css('top'));
+    var divWidth = parseInt(piecesDiv.css('width'));
+    // console.log('ASDF', divTop, divWidth)
 
-  var dwidth = getRandomPosition(0, (piecesDiv.width() - d1.width()));
-  var dheight = getRandomPosition( divTop, piecesDiv.height() );
+    var dwidth = getRandomPosition(0, (piecesDiv.width() - d1.width()));
+    var dheight = getRandomPosition( divTop, piecesDiv.height() );
 
-  d1.css({top: dheight, left: dwidth})
+    d1.css({top: dheight, left: dwidth});
+
+    // This is where it is first placed
+    // What translation would be necessary to get from here to the top left corner of the map
+
+    var offsetX = $(".map").position().left - dwidth;
+    var offsetY = $(".map").position().top - dheight;
+
+    d1.data("offset-x", offsetX);
+    d1.data("offset-y", offsetY);
 };
 
 
@@ -157,15 +168,15 @@ for (var i = 0; i < draggable.length; i++) {
       event.relatedTarget.textContent = 'Dragged out';
     },
     ondrop: function (event) {
-      event.relatedTarget.textContent = 'Dropped';
-      console.log('Target position:', $(event.relatedTarget).position());
+      // event.relatedTarget.textContent = 'Dropped';
+      // console.log('Target position:', $(event.relatedTarget).position());
       var relPos = {top: 0, left: 0};
 
       relPos.top = $(event.relatedTarget).position().top - $('.map').position().top;
-      console.log('Top', relPos.top )
+      // console.log('Top', relPos.top )
 
       relPos.left = $(event.relatedTarget).position().left - $('.map').position().left;
-      console.log('Left', relPos.left )
+      // console.log('Left', relPos.left )
 
 
       var databaseData = JSON.parse($(event.relatedTarget).attr('data'));
@@ -177,10 +188,45 @@ for (var i = 0; i < draggable.length; i++) {
               ( relPos.top <= y_cor * 1.1 ) ) && 
               ( ( relPos.left >= x_cor * 0.9 ) && 
               ( relPos.left <= x_cor * 1.1 ) ) ) {
-        console.log("WHAT? THIS WORKS!")
+
+        var desiredX = $(event.relatedTarget).data('offset-x') + x_cor;
+        var desiredY = $(event.relatedTarget).data('offset-y') + y_cor;
+
+        event.relatedTarget.style.webkitTransform =
+        event.relatedTarget.style.transform =
+          'translate(' + desiredX + 'px, ' + desiredY + 'px)';
+
+
+
+
+        // $(event.relatedTarget).removeClass("drag-drop yes-drop can-drop");
+
+        // debugger;
+
+        // console.log( x_cor );
+
+        // console.log( "Relpos left", relPos.left )
+        // console.log( "Relpos top", relPos.top );
+
+
+        // event.relatedTarget.style.webkitTransform =
+        // event.relatedTarget.style.transform =
+        //   // 'translate(' + 0 + 'px, ' + 0 + 'px)'
+        //   'translate(' + (relPos.left + x_cor) + 'px, ' + (relPos.top + y_cor) + 'px)';
+
+
+        // var draggableElement = event.relatedTarget,
+        // dropzoneElement = event.target;
+        // draggableElement.textContent = 'Dropped';
+
         // $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
-        // $(event.relatedTarget).removeClass('draggable yes-drop can-drop yes-drop')
-        $(event.relatedTarget).css({top: y_cor, left: x_cor});
+        
+        // transform: translate(100px,150px);
+        // debugger;
+        // $(event.relatedTarget).css({
+        //   left: (relPos.left + x_cor) + "px", 
+        //   top: (relPos.top + y_cor) + "px"
+        // });
 
       }
 
@@ -193,13 +239,13 @@ for (var i = 0; i < draggable.length; i++) {
   });
 
 
-ondrop: function (event) {
-        var draggableElement = event.relatedTarget,
-            dropzoneElement = event.target;
+// ondrop: function (event) {
+//         var draggableElement = event.relatedTarget,
+//             dropzoneElement = event.target;
 
-        draggableElement.textContent = 'Dropped';
-        $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
-    },
+//         draggableElement.textContent = 'Dropped';
+//         $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+//     },
 
 
 

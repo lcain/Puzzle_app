@@ -8,11 +8,16 @@
 }
 
 
-
+.map.dropzone {
+  opacity: 0.3;
+}
 .draggable {
   position: absolute;
   right: 0;
   bottom: 0;
+
+/*  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);*/
 }
 
 #container {
