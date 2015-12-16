@@ -6,7 +6,7 @@
   <!-- <img src="<%#= asset_path @map[:image] %>" class="map"> -->
   <%#= image_tag @map[:image], :class => "map" %>
   <%#= asset_path @map[:image], :class => "map" %>
-  <img src="<%= asset_path @map[:image] %>" class="map dropzone" id="actualmap">
+    <img src="<%= asset_path @map[:image] %>" class="map dropzone" id="actualmap">
   </div>
 
 
@@ -16,7 +16,7 @@
   <%#= image_tag piece[:image], :class => "draggable" %>
 
   <%#= asset_path piece[:image], :class => "draggable" %>
-  <img src="<%= asset_path piece[:image] %>" class="draggable drag-drop yes-drop" data="<%= [piece.x_cor, piece.y_cor] %>">
+  <img src="<%= asset_path piece[:image] %>" class="pieces draggable drag-drop yes-drop" data="<%= [piece.x_cor, piece.y_cor] %>" data-desiredX="<%= piece.x_cor %>" data-desiredY="<%= piece.y_cor %>">
   <!-- <img src="<%#= piece[:image] %>" class="draggable"> -->
 <% end %>
 </div>
