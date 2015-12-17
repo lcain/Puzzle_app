@@ -42,7 +42,7 @@ body {
 
 #piecesDiv {
  /* border: 2px solid green;*/
-  display: inline-block;
+  display: block;
   position: absolute;
   top: 20%;
   height: 25em;
@@ -57,4 +57,57 @@ body {
 .banner {
   position: relative;
   z-index: 200;
+}
+
+#timer {
+  font-size: 40px;
+  background-color: rgba( 210, 180, 140, 0.4);
+  border: 2px solid black;
+  width: 100px;
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
+.reload {
+  font-size: 40px;
+  background-color: rgba( 210, 180, 140, 0.4);
+  border: 2px solid black;
+  text-align: center;
+/*  display: block;*/
+ /* width: 100px;*/
+/*  text-align: center;
+  margin: auto;*/
+  
+}
+
+#reloader {
+    bottom: 0;  
+    margin: auto;
+    padding: 0;
+  /*  border: 5px solid red;*/
+    position: absolute;
+    text-align: center;
+    display: block;
+    margin-left: 41%;
+}
+
+
+body {
+  background-image: url("mud.jpg");
+  background-size: 100% 100%
+}
+
+a {
+    color: black;
+}
+
+#instructions {
+  font-size: 20px;
+  background-color: rgba( 210, 180, 140, 0.4);
+  border: 2px solid black;
+  text-align: center;
+  display: inline-block;
+  margin-left: 90%;
+  font-weight: bold;
 }

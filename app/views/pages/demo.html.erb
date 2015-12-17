@@ -3,21 +3,22 @@
 <div id="container">
 <div id="piecesDiv"></div>
   <div id="mapDiv">
-  <!-- <img src="<%#= asset_path @map[:image] %>" class="map"> -->
-  <%#= image_tag @map[:image], :class => "map" %>
-  <%#= asset_path @map[:image], :class => "map" %>
+  <div>
+  <div id="timer"></div>
+  <div id="instructions"><p>Click and drag. Use arrows to rotate. </p><p>Hint: Resize to grab stuck pieces.</p></div>
+  </div>
+
     <img src="<%= asset_path @map[:image] %>" class="map dropzone" id="actualmap">
   </div>
 
 
 <% @pieces.each do |piece| %>
 
-  <!-- <img src="<%#= asset_path( piece[:image] ) %>" class="draggable"> -->
-  <%#= image_tag piece[:image], :class => "draggable" %>
-
-  <%#= asset_path piece[:image], :class => "draggable" %>
   <img src="<%= asset_path piece[:image] %>" class="pieces draggable drag-drop yes-drop" data="<%= [piece.x_cor, piece.y_cor] %>" data-desiredX="<%= piece.x_cor %>" data-desiredY="<%= piece.y_cor %>">
-  <!-- <img src="<%#= piece[:image] %>" class="draggable"> -->
+
 <% end %>
+<div id="reloader">
+
+</div>
 </div>
 

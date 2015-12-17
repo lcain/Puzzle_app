@@ -1,11 +1,11 @@
-var draggable;
+$("html").css("opacity", 0);
 
+var draggable;
+var timer;
 var maxHeight = 0;
 var maxWidth = 0;
 var mapLeft = 0;
 var mapTop = 0;
-
-
 
 
 Mousetrap.bind('left', function() {  
@@ -46,12 +46,6 @@ Mousetrap.bind('right', function() {
   }
 });
 
-// If someone is currently holding the left or right keys
-  // Check to see if there is anything that is currently be dragged, use hasclass method to check and see if 'can-drop' is there. 
-  // Rotate them from there
-
-
-
 
 var realignPieces = function () {
   var doc = $(document);
@@ -71,11 +65,14 @@ $(window).on("resize", realignPieces);
 
 $(window).load(function() {
 
+  $('#timer').timer('start');
+  $('#timer').timer('pause');
+
   var doc = $(document);
   maxHeight = doc.height();
   maxWidth = doc.width();
 
-  $('body').css({"background-color": "rgb(119, 119, 119)"})
+  // $('body').css({"background-color": "rgb(119, 119, 119)"})
  
 
 // target elements with the "draggable" class
@@ -143,12 +140,6 @@ interact('.draggable')
   var mapHeight = map.height();
   var mapWidth = map.width();
 
-  // function getRandomZone(min, max) {
-  //   var pos = Math.floor(Math.random() * (max - min + 1)) + min;
-  //   console.log('hecticZone', pos);
-  //   return pos;
-  // }
-
 
   function getRandomPosition(min, max) {
     var pos = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -177,23 +168,13 @@ interact('.draggable')
     });
 
 
-// $("#gallery2 img").each( function() {
-//   var rNum = (Math.random()*4)-2;  
-//   $(this).css( {   
-//     '-webkit-transform': 'rotate('+rNum+'2deg)',
-//     '-moz-transform': 'rotate('+rNum+'2deg)'  
-//   } );  
-// } );
-
-    // This is where it is first placed
-    // What translation would be necessary to get from here to the top left corner of the map
-
     var offsetX = $(".map").position().left - dwidth;
     var offsetY = $(".map").position().top - dheight;
 
     d1.data("offset-x", offsetX);
     d1.data("offset-y", offsetY);
 };
+$("html").animate({opacity: 1}, 500);
 
 
 
@@ -238,9 +219,11 @@ interact('.draggable')
     ondropactivate: function (event) {
       // add active dropzone feedback
       event.target.classList.add('drop-active');
+      $('#timer').timer('resume');
 
     },
     dragstart: function (event) {
+
       var draggableElement = event.relatedTarget,
           dropzoneElement = event.target;
       // feedback the possibility of a drop
@@ -249,6 +232,7 @@ interact('.draggable')
       draggableElement.classList.add('can-drop');
       draggableElement.textContent = 'Dragged in';
 
+      // $('#timer').timer();
 
     },
     ondragleave: function (event) {
@@ -274,8 +258,8 @@ interact('.draggable')
       var x_cor = databaseData[0];
       var y_cor = databaseData[1];
 
-      console.log( relPos );
-      console.log( x_cor, y_cor );
+      // console.log( relPos );
+      // console.log( x_cor, y_cor );
 
       if ( ( ( relPos.top >= y_cor - 10 ) && 
               ( relPos.top <= y_cor + 10 ) ) && 
@@ -323,7 +307,7 @@ interact('.draggable')
 
         realignPieces();
 
-        console.log("THISWORKSTOO");
+        // console.log("THISWORKSTOO");
         if ($('.draggable').length == 0) {
 
           $('<img />', {
@@ -331,46 +315,18 @@ interact('.draggable')
           class: 'banner'
         }).appendTo($('#mapDiv'))
 
+          var $el = $("<a href='#' />").addClass("reload").text( "Play again?" );
+          $el.appendTo( $('#reloader') );
+
+          $el.on("click", function () {
+            window.location.reload();
+          });
+
           console.log("YOU WIN");
+          $('#timer').timer('pause');
+
         }
 
-
-        //Grabbing non-updated position. Where is the new position coming from?
-
-
-        // event.relatedTarget.style.webkitTransform =
-        // event.relatedTarget.style.transform =
-        //   'translate(' + correctPosLeft + 'px, ' + correctPosTop + 'px)';
-
-
-        // $(event.relatedTarget).removeClass("draggable drag-drop yes-drop");
-
-        // debugger;
-
-        // console.log( x_cor );
-
-        // console.log( "Relpos left", relPos.left )
-        // console.log( "Relpos top", relPos.top );
-
-
-        // event.relatedTarget.style.webkitTransform =
-        // event.relatedTarget.style.transform =
-        //   // 'translate(' + 0 + 'px, ' + 0 + 'px)'
-        //   'translate(' + (relPos.left + x_cor) + 'px, ' + (relPos.top + y_cor) + 'px)';
-
-
-        // var draggableElement = event.relatedTarget,
-        // dropzoneElement = event.target;
-        // draggableElement.textContent = 'Dropped';
-
-        // $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
-        
-        // transform: translate(100px,150px);
-        // debugger;
-        // $(event.relatedTarget).css({
-        //   left: (relPos.left + x_cor) + "px", 
-        //   top: (relPos.top + y_cor) + "px"
-        // });
 
       }
 
@@ -383,47 +339,5 @@ interact('.draggable')
   });
 
 
-// ondrop: function (event) {
-//         var draggableElement = event.relatedTarget,
-//             dropzoneElement = event.target;
-
-//         draggableElement.textContent = 'Dropped';
-//         $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
-//     },
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
-
-
-// .on('drop', function (event) {
-//   // append draggable to dropzone element
-//   event.target.appendChild(event.relatedTarget);
-//   var dropzoneRect = interact.getElementRect(event.target);
-
-//   // subtract the dropzone's offset (probably needs some adjustment)
-//   x = (parseFloat(target.getAttribute('data-x')) || 0) - dropzoneRect.left,
-//   y = (parseFloat(target.getAttribute('data-y')) || 0) - dropzoneRect.right;
-
-//    // translate the element
-//     target.style.webkitTransform =
-//     target.style.transform =
-//       'translate(' + x + 'px, ' + y + 'px)';
-
-//     // update the position attributes
-//     target.setAttribute('data-x', x);
-//     target.setAttribute('data-y', y);
-// }
-
-// event.relatedTarget

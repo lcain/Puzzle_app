@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require interact
 //= require mousetrap
+//= require timer
 //= require_tree .
