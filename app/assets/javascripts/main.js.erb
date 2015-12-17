@@ -210,12 +210,14 @@ interact('.draggable')
       var x_cor = databaseData[0];
       var y_cor = databaseData[1];
 
+      console.log( relPos );
+      console.log( x_cor, y_cor );
 
-      if ( ( ( relPos.top >= y_cor * 0.9 ) && 
-              ( relPos.top <= y_cor * 1.1 ) ) && 
-              ( ( relPos.left >= x_cor * 0.9 ) && 
-              ( relPos.left <= x_cor * 1.1 ) ) ) {
-       
+      if ( ( ( relPos.top >= y_cor - 10 ) && 
+              ( relPos.top <= y_cor + 10 ) ) && 
+              ( ( relPos.left >= x_cor - 10 ) && 
+              ( relPos.left <= x_cor + 10 ) ) ) {
+      
 
         var desiredX = $(event.relatedTarget).data('offset-x') + x_cor;
         var desiredY = $(event.relatedTarget).data('offset-y') + y_cor;
@@ -256,7 +258,7 @@ interact('.draggable')
         if ($('.draggable').length == 0) {
 
           $('<img />', {
-          src: 'assets/banner-congratulations.png',
+          src: '<%= asset_path "banner-congratulations.png" %>',
           class: 'banner'
         }).appendTo($('#mapDiv'))
 
