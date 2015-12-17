@@ -4,6 +4,8 @@
 
 ###Welcome to my Dino puzzle!
 
+[Click here to play!](https://puzlapp.herokuapp.com/)
+
 For Project One I really wanted to get back into Javascript. We went two weeks with barely touching it and focusing mainly on Rails. I knew I had forgotten a lot of the basics of JS. So that's what I did, I decided to do something that would force me to use JS again. 
 
 I found [this](http://www.bestcoloringpagesforkids.com/wp-content/uploads/2013/07/Dinosaur-Skeleton-Coloring-Page.jpg) picture and thought it would be perfect for cutting up and turning into a puzzle. 
