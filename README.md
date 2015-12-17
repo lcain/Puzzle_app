@@ -6,7 +6,7 @@
 
 [Click here to play!](https://puzlapp.herokuapp.com/)
 
-This is week six of learning coding.
+This is week six of learning to code at General Assembly!
 
 For Project One I really wanted to get back into Javascript. We went two weeks with barely touching it and focusing mainly on Rails. I knew I had forgotten a lot of the basics of JS. So that's what I did, I decided to do something that would force me to use JS again. 
 
@@ -14,7 +14,9 @@ I found [this](http://www.bestcoloringpagesforkids.com/wp-content/uploads/2013/0
 
 I started basic with a little four piece puzzle to test with, and then used Gimp to cut up the indiviudal bones.
 
-Here are the libraries used:
+For the basic drag and drop I used interact.js, for the key binds I used Mousetrap, and for the timer I used jQuery Timer. 
+
+Find the libraries below!:
 
 ######https://jquery.com/
 
@@ -24,4 +26,4 @@ Here are the libraries used:
 
 ######http://jquerytimer.com/
 
-Thanks to Jack for teaching me how to do what I wanted to do with this puzzle! There are so many things in this that I've never done before. Thanks to Alex (my other puzzle buddy) for helping me with interact and timer. It was definitely a learning experience the entire week. Next time, I would do it differently. 
+Thanks to Jack for teaching me how to do what I wanted to do with this puzzle! There are so many things in this that I've never done, seen, or even knew were possible before. Thanks to Alex (my other puzzle buddy) for helping me with interact and timer. It was definitely a learning experience the entire week. Next time, I would do it differently. And that's what it's all about. 
